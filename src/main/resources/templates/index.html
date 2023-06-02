@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -10,11 +11,16 @@
     <title>Index</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container my-2">
+        Hello <b sec:authentication="principal.Username"></b>
+        <a href="/logout" class="btn btn-danger float-end m-3">
+            Logout
+        </a>
+        <h1>Manage Books</h1>
         <div class="card">
             <div class="card-body">
                 <div th:switch="${books}" class="container">
-                    <a href="/edit" class="btn btn-success">
+                    <a href="/edit" class="btn btn-success" sec:authorize="hasAnyRole('ADMIN', 'PUBLISHER')">
                             <i class="fas fa-solid fa-plus"></i>
                             Add Book
                     </a>
@@ -37,12 +43,14 @@
                                 <td th:text="${book .description}"></td>
                                 <td th:text="${book.price}"></td>
                                 <td>
-                                    <a th:href="@{/edit/{id}(id=${book.id})}">
+                                    <a th:href="@{/edit/{id}(id=${book.id})}"
+                                       sec:authorize="hasAnyRole('ADMIN', 'PUBLISHER')">
                                         <i class="fas fa-solid fa-edit"></i>
                                     </a>
                                 </td>
                                 <td>
-                                    <a th:href="@{/delete/{id}(id=${book.id})}">
+                                    <a th:href="@{/delete/{id}(id=${book.id})}"
+                                       sec:authorize="hasAnyRole('ADMIN')">
                                         <i class="fas fa-solid fa-trash"></i>
                                     </a>
                                 </td>
