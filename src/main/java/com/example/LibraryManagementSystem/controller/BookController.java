@@ -34,7 +34,7 @@ public class BookController {
         return "redirect:/";
     }
 
-    @RequestMapping({"/edit", "/edit/{id}"})
+    @RequestMapping({"/edit","/edit/{id}"})
     public String editBook(Model model, @PathVariable("id")Optional<Long> id){
         if(id.isPresent()){
             Optional<Book> book = bookService.findBookByID(id.get());
@@ -43,6 +43,8 @@ public class BookController {
             } else {
                 model.addAttribute("book", new Book());
             }
+        } else {
+            model.addAttribute("book", new Book());
         }
         return "add-edit-book";
     }

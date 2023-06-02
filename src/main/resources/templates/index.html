@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xml:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -14,35 +14,41 @@
         <div class="card">
             <div class="card-body">
                 <div th:switch="${books}" class="container">
-                    <a th:href="@{/delete/{id}(id=${book.id})">
-                        <i class="fas fa-solid fa-plus"></i>
+                    <a href="/edit" class="btn btn-success">
+                            <i class="fas fa-solid fa-plus"></i>
+                            Add Book
                     </a>
                     <h2 th:case="null">No records found !!</h2>
                     <h2 th:case="*">
-                        <table>
-                            <th>
-                                <td>Name</td>
-                                <td>Description</td>
-                                <td>Price</td>
-                                <td>Edit</td>
-                                <td>Delete</td>
-                            </th>
+                        <table class="table">
+                            <thead class="thead-light">
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                            </thead>
 
+                            <tbody>
                             <tr th:each="book: ${books}">
                                 <td th:text="${book.name}"></td>
                                 <td th:text="${book .description}"></td>
                                 <td th:text="${book.price}"></td>
                                 <td>
-                                    <a th:href="@{/edit/{id}(id=${book.id})">
+                                    <a th:href="@{/edit/{id}(id=${book.id})}">
                                         <i class="fas fa-solid fa-edit"></i>
                                     </a>
                                 </td>
                                 <td>
-                                    <a th:href="@{/delete/{id}(id=${book.id})">
+                                    <a th:href="@{/delete/{id}(id=${book.id})}">
                                         <i class="fas fa-solid fa-trash"></i>
                                     </a>
                                 </td>
                             </tr>
+                            </tbody>
+
                         </table>
                     </h2>
                 </div>
